@@ -1,11 +1,9 @@
 ## 🎯 Milestone 6 : Améliorations UX & Robustesse
 **Contexte**  
 Rendre l’application agréable et fiable.
-Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\WebstormProjects\real_time_chat
 
 
 **Tâches**
-- Ne jamais toucher aux fichiers du projet : C:\Users\thoma\WebstormProjects\real_time_chat
 - Ajouter un loader pendant les requêtes (login, messages).
 - Ajouter des notifications toast (ex. nouvel utilisateur connecté).
 - Gérer les erreurs API avec un composant d’erreur global.
