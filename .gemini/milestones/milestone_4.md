@@ -13,5 +13,6 @@ Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\
 - Scroll automatique vers les derniers messages.
 
 **Contraintes**
+- Respecter le style défini dans `.gemini/style.md`.
 - Ne pas créer de nouvelle conversation tant qu’aucun message n’est envoyé.
 - Historique paginé (supporter "Load more" en haut de la conversation).

@@ -12,5 +12,6 @@ Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\
 - Rafraîchir la liste automatiquement quand un `user_status_changed` est reçu par socket.
 
 **Contraintes**
+- Respecter le style défini dans `.gemini/style.md`.
 - Optimiser la liste avec un `useEffect` + `setInterval` (polling ou via sockets).
 - Trier les users par statut (online en haut).

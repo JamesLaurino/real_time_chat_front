@@ -12,5 +12,6 @@ Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\
 - Si destinataire est offline → message sauvegardé seulement.
 
 **Contraintes**
+- Respecter le style défini dans `.gemini/style.md`.
 - Toujours confirmer la persistance avant d’afficher le message (éviter faux positifs).
 - Scroll automatique vers le dernier message.

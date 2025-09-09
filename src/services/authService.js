@@ -9,11 +9,13 @@ export const login = async (credentials) => {
     body: JSON.stringify(credentials),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error('Login failed');
+    const errorMsg = data.errors ? data.errors.map(err => Object.values(err).join(', ')).join(', ') : data.error;
+    throw new Error(errorMsg || 'Login failed');
   }
 
-  const data = await response.json();
   return data.data;
 };
 
@@ -26,10 +28,12 @@ export const signup = async (userData) => {
     body: JSON.stringify(userData),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error('Signup failed');
+    const errorMsg = data.errors ? data.errors.map(err => Object.values(err).join(', ')).join(', ') : data.error;
+    throw new Error(errorMsg || 'Signup failed');
   }
 
-  const data = await response.json();
   return data.data;
 };

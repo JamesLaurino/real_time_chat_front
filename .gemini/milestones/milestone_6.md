@@ -13,5 +13,6 @@ Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\
 - Préparer un thème responsive avec Tailwind (mobile-first).
 
 **Contraintes**
+- Respecter le style défini dans `.gemini/style.md`.
 - Ne pas bloquer l’UI en cas d’erreur (afficher feedback clair).
 - Respecter l’architecture prévue (services, context, components).
