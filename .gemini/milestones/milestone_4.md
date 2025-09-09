@@ -1,8 +1,6 @@
 ## 🎯 Milestone 4 : Conversations (UI de chat)
 **Contexte**  
 Le user peut ouvrir une conversation avec un autre user.
-Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\WebstormProjects\real_time_chat
-
 
 **Tâches**
 - Créer une page `ChatPage`.
