@@ -45,9 +45,9 @@ Créer une interface utilisateur **moderne, réactive et ergonomique** pour l’
 ## ⚙️ Stack Technique
 
 - **React (Vite)** : Framework SPA performant.
-- **TailwindCSS** : Design moderne et responsive.
+- **Material UI** : Design moderne et responsive.
 - **React Router** : Navigation entre pages (login, inscription, chat).
-- **Axios** : Appels API vers le backend.
+- **Fetch** : Appels API vers le backend.
 - **Socket.io-client** : Communication temps réel avec le backend.
 - **Context API / Hooks** : Gestion globale de l’état utilisateur et des conversations.
 - **Toast notifications / loaders** : Feedback utilisateur pour actions et erreurs.

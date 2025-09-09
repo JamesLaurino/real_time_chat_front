@@ -1,20 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-function Home() {
-    return <h2>Home</h2>;
-}
+import { Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import ChatPage from './pages/ChatPage';
 
 function App() {
-    return (
-        <Router>
-            <div>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                </Routes>
-            </div>
-        </Router>
-    );
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/chat" element={<ChatPage />} />
+      </Route>
+      <Route path="/" element={<Navigate to="/chat" />} />
+    </Routes>
+  );
 }
 
 export default App;
