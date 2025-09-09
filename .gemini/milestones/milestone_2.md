@@ -14,6 +14,7 @@ Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\
 - Protéger les routes (si pas connecté → redirect vers `/login`).
 
 **Contraintes**
+- Se baser sur la documentation du backend définie dans `.gemini/FRONT_END_API_DOCS.md`
 - Respecter le style défini dans `.gemini/style.md`.
 - Ne jamais stocker le mot de passe côté frontend.
 - Rediriger vers `/chat` après login réussi.
