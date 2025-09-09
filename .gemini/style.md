@@ -2,7 +2,7 @@
 # Guide de style - Front-End React Chat
 
 ## 🌐 Général
-- Tu es un expert de nodeJs soucieux d'une bonne achitecture modulable et pro.
+- Tu es un expert de nodeJs soucieux d'une bonne achitecture modulable et professionnelle.
 - Code en **JavaScript (ES6+)** uniquement.
 - Nommer les fichiers en **camelCase** sauf les composants React (PascalCase).
 - Une seule responsabilité par fichier.

@@ -6,7 +6,6 @@ Préparer la base technique du frontend avec React et Tailwind.
 **Tâches**
 - Installer TailwindCSS et configurer (`tailwind.config.js`, `index.css`).
 - Installer dépendances :
-    - `axios` (requêtes API)
     - `react-router-dom` (routing)
     - `socket.io-client` (connexion temps réel au backend)
 - Configurer structure des dossiers :
