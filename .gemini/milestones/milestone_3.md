@@ -3,10 +3,11 @@
 Afficher les utilisateurs disponibles avec leur statut (online/offline).
 Le banckend qui doit être consommé se trouve dans le dossier : C:\Users\thoma\WebstormProjects\real_time_chat
 
+
 **Tâches**
 - Ne jamais toucher aux fichiers du projet : C:\Users\thoma\WebstormProjects\real_time_chat
 - Créer un composant `UserList`.
-- Récupérer les users via l’API backend (`GET /users`).
+- Récupérer les users via l’API backend (`GET http://localhost:3000/users`).
 - Afficher username + boule verte/rouge selon `online`.
 - Ajouter une barre de recherche pour filtrer par `username`.
 - Rafraîchir la liste automatiquement quand un `user_status_changed` est reçu par socket.
