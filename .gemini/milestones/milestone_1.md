@@ -1,10 +1,9 @@
 ## 🎯 Milestone 1 : Setup du projet frontend
 
 **Contexte**  
-Préparer la base technique du frontend avec React et Tailwind.
+Préparer la base technique du frontend avec React et Material UI.
 
 **Tâches**
-- Installer TailwindCSS et configurer (`tailwind.config.js`, `index.css`).
 - Installer dépendances :
     - `react-router-dom` (routing)
     - `socket.io-client` (connexion temps réel au backend)
