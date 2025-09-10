@@ -47,6 +47,16 @@ const ChatWindow = ({ selectedConversation, onConversationUpdated }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  const conversationRef = useRef(selectedConversation);
+  const userRef = useRef(user);
+  const onConversationUpdatedRef = useRef(onConversationUpdated);
+
+  useEffect(() => {
+    conversationRef.current = selectedConversation;
+    userRef.current = user;
+    onConversationUpdatedRef.current = onConversationUpdated;
+  }, [selectedConversation, user, onConversationUpdated]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -70,23 +80,47 @@ const ChatWindow = ({ selectedConversation, onConversationUpdated }) => {
   }, [messages]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on('receive_message', (message) => {
-        if (!selectedConversation?.id && message.conversation_id) {
-          onConversationUpdated(message.conversation_id);
-        }
+    if (!socket) return;
 
-        if (message.conversation_id === selectedConversation?.id ||
-            (!selectedConversation?.id && ((message.sender_id === user?.id && message.recipient_id === selectedConversation?.other_user?.id) || (message.sender_id === selectedConversation?.other_user?.id && message.recipient_id === user?.id)))) {
-          setMessages(prevMessages => [...prevMessages, message]);
-        }
-      });
+    const handleReceiveMessage = (message) => {
+      const currentConversation = conversationRef.current;
+      const currentUser = userRef.current;
+      const currentOnConversationUpdated = onConversationUpdatedRef.current;
 
-      return () => {
-        socket.off('receive_message');
+      if (!currentConversation || !currentUser) return;
+
+      // Normalize message from socket (camelCase) to match API response (snake_case)
+      const normalizedMessage = {
+        ...message,
+        id: message.id || Date.now(),
+        conversation_id: message.conversationId || message.conversation_id,
+        sender_id: message.senderId || message.sender_id,
+        created_at: message.createdAt || message.created_at,
+        sender: message.sender || { id: message.senderId, username: '...' } // Add a fallback for sender
       };
-    }
-  }, [socket, selectedConversation, user, onConversationUpdated]);
+
+      if (!currentConversation.id && normalizedMessage.conversation_id) {
+        currentOnConversationUpdated(normalizedMessage.conversation_id);
+        // After the conversation is updated, we need to join the new room.
+        socket.emit('join_conversation', normalizedMessage.conversation_id);
+      }
+
+      const isForCurrentConv = normalizedMessage.conversation_id === currentConversation.id;
+      const isForNewConv = !currentConversation.id && 
+        ((normalizedMessage.sender_id === currentUser.id && message.recipientId === currentConversation.other_user.id) || 
+         (message.senderId === currentConversation.other_user.id && message.recipientId === currentUser.id));
+
+      if (isForCurrentConv || isForNewConv) {
+        setMessages(prevMessages => [...prevMessages, normalizedMessage]);
+      }
+    };
+
+    socket.on('receive_message', handleReceiveMessage);
+
+    return () => {
+      socket.off('receive_message', handleReceiveMessage);
+    };
+  }, [socket]);
 
   const loadMessages = async (pageNum) => {
     if (!hasMoreMessages || loading || !selectedConversation?.id) return;
@@ -109,6 +143,7 @@ const ChatWindow = ({ selectedConversation, onConversationUpdated }) => {
 
   const handleSendMessage = () => {
     if (newMessage.trim() && socket && user) {
+      // Send payload with camelCase keys as seen in example files
       socket.emit('send_message', {
         conversationId: selectedConversation.id,
         recipientId: selectedConversation.other_user.id,

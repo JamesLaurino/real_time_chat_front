@@ -42,7 +42,7 @@ const ChatPage = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleSelectUser = (selectedUser) => {
+    const handleSelectUser = (selectedUser) => {
     const existingConversation = conversations.find(conv =>
       (conv.user1_id === user.id && conv.user2_id === selectedUser.id) ||
       (conv.user1_id === selectedUser.id && conv.user2_id === user.id)
@@ -51,7 +51,7 @@ const ChatPage = () => {
     if (existingConversation) {
       setSelectedConversation({
         ...existingConversation,
-        other_user: existingConversation.user1_id === user.id ? conversations.find(c => c.id === existingConversation.id).user2 : conversations.find(c => c.id === existingConversation.id).user1
+        other_user: conversations.find(c => c.id === existingConversation.id)?.other_user || selectedUser
       });
     } else {
       setSelectedConversation({
