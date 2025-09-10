@@ -89,6 +89,7 @@ const UserList = ({ onSelectUser }) => {
   }, [socket, addNotification, currentUser]);
 
   const filteredUsers = users.filter(user =>
+    user.id !== currentUser?.id && // Exclude current user
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
