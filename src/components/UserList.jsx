@@ -34,7 +34,7 @@ const StyledBadge = styled(Badge)(({ theme, ownerState }) => ({
   },
 }));
 
-const UserList = () => {
+const UserList = ({ onSelectUser }) => {
   const { token } = useContext(AuthContext);
   const socket = useSocket();
   const [users, setUsers] = useState([]);
@@ -90,7 +90,7 @@ const UserList = () => {
       />
       <List>
         {filteredUsers.map(user => (
-          <ListItem key={user.id}>
+          <ListItem button key={user.id} onClick={() => onSelectUser(user)}>
             <ListItemAvatar>
               <StyledBadge
                 overlap="circular"
