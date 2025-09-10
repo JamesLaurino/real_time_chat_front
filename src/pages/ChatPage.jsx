@@ -1,16 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
-import AuthContext from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import UserList from '../components/UserList';
 import ChatWindow from '../components/ChatWindow';
 import { Box, Button, AppBar, Toolbar, Typography, Drawer, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { getConversations } from '../services/conversationService';
+import { useNotifier } from '../context/NotificationContext';
 
 const drawerWidth = 300;
 
 const ChatPage = () => {
-  const { logout, user, token } = useContext(AuthContext);
+  const { logout, user } = useAuth();
+  const { addNotification } = useNotifier();
   const navigate = useNavigate();
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [conversations, setConversations] = useState([]);
@@ -21,17 +23,18 @@ const ChatPage = () => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const fetchedConversations = await getConversations(token);
+        const fetchedConversations = await getConversations();
         setConversations(fetchedConversations);
       } catch (error) {
         console.error('Failed to fetch conversations:', error);
+        addNotification(`Failed to fetch conversations: ${error.message}`, 'error');
       }
     };
 
-    if (token) {
+    if (user) {
       fetchConversations();
     }
-  }, [token]);
+  }, [user, addNotification]);
 
   const handleLogout = () => {
     logout();
@@ -42,7 +45,7 @@ const ChatPage = () => {
     setMobileOpen(!mobileOpen);
   };
 
-    const handleSelectUser = (selectedUser) => {
+  const handleSelectUser = (selectedUser) => {
     const existingConversation = conversations.find(conv =>
       (conv.user1_id === user.id && conv.user2_id === selectedUser.id) ||
       (conv.user1_id === selectedUser.id && conv.user2_id === user.id)
@@ -74,10 +77,11 @@ const ChatPage = () => {
     }));
     const fetchConversations = async () => {
       try {
-        const fetchedConversations = await getConversations(token);
+        const fetchedConversations = await getConversations();
         setConversations(fetchedConversations);
       } catch (error) {
         console.error('Failed to fetch conversations:', error);
+        addNotification(`Failed to refetch conversations: ${error.message}`, 'error');
       }
     };
     fetchConversations();

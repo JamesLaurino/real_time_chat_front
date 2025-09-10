@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       if (token) {
         try {
-          const userData = await getMe(token);
+          const userData = await getMe();
           setUser(userData);
         } catch (error) {
           console.error(error);

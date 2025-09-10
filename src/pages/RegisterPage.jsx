@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { signup } from '../services/authService';
-import { Container, Box, TextField, Button, Typography, Grid, Link, Alert } from '@mui/material';
+import { useNotifier } from '../context/NotificationContext';
+import { Container, Box, TextField, Button, Typography, Grid, Link, Alert, CircularProgress } from '@mui/material';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { addNotification } = useNotifier();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setLoading(true);
     try {
       await signup({ username, email, password });
+      addNotification('Registration successful! Please log in.', 'success');
       navigate('/login');
     } catch (err) {
-      setError(err.message);
+      addNotification(err.message, 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,6 +55,7 @@ const RegisterPage = () => {
                 autoFocus
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                disabled={loading}
               />
             </Grid>
             <Grid item xs={12}>
@@ -62,6 +68,7 @@ const RegisterPage = () => {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
               />
             </Grid>
             <Grid item xs={12}>
@@ -75,17 +82,18 @@ const RegisterPage = () => {
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
               />
             </Grid>
           </Grid>
-          {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
-            Sign Up
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

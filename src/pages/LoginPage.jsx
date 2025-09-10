@@ -1,14 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { login as loginService } from '../services/authService';
-import { Container, Box, TextField, Button, Typography, Grid, Link, Alert } from '@mui/material';
+import { Container, Box, TextField, Button, Typography, Grid, Link, Alert, CircularProgress } from '@mui/material';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login, user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const { login, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,12 +22,15 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     try {
-            const { token } = await loginService({ email, password });
+      const { token } = await loginService({ email, password });
       login(token);
       // Navigation is now handled by the useEffect hook
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,6 +62,7 @@ const LoginPage = () => {
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
           <TextField
             margin="normal"
@@ -70,6 +75,7 @@ const LoginPage = () => {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
           />
           {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
           <Button
@@ -77,8 +83,9 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
-            Sign In
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
