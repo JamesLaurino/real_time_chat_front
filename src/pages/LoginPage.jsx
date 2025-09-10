@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { login as loginService } from '../services/authService';
@@ -8,16 +8,23 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useContext(AuthContext);
+  const { login, user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect if user is successfully fetched
+    if (user) {
+      navigate('/chat');
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const { token } = await loginService({ email, password });
+            const { token } = await loginService({ email, password });
       login(token);
-      navigate('/chat');
+      // Navigation is now handled by the useEffect hook
     } catch (err) {
       setError(err.message);
     }
