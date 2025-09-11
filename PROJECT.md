@@ -25,10 +25,20 @@ Développer une application de chat **one-to-one** (et extensible au multi-utili
     - Il est transmis en **temps réel** au destinataire (s’il est connecté).
 - Les conversations s’ouvrent toujours sur les **derniers messages**, avec possibilité de **remonter** pour voir les anciens.
 
+### 🗂 Navigation & Layout
+- **Page principale** :
+  - Liste des utilisateurs sur le **côté gauche** avec leur statut (boule verte/ grise).
+  - Barre de recherche pour filtrer les utilisateurs par **username**.
+  - Zone de chat à droite, affichant l’historique et les nouveaux messages.
+- **Responsiveness** :
+  - Desktop et mobile adaptés.
+
 ### 🔍 Recherche & UX
 - L’utilisateur peut **rechercher un autre user** par son username.
 - L’application est **responsive** (desktop & mobile).
 - Gestion des erreurs et feedback utilisateur (toasts, loaders).
+- Affichage clair des **statuts en ligne / hors ligne**.
+- Gestion des **messages entrants en temps réel** sans rafraîchissement.
 
 
 ## ⚙️ Stack Technique
@@ -45,11 +55,12 @@ Développer une application de chat **one-to-one** (et extensible au multi-utili
 
 ### Frontend
 - **React (Vite)** pour la SPA
-- **TailwindCSS** pour le design
-- **Axios** pour les appels API
+- **Material UI** pour le design
+- **Fetch** pour les appels API
 - **React Router** pour la navigation
 - **Socket.io-client** pour le temps réel
 - **Context API / Hooks** pour la gestion de l’état global
+- **Toast notifications / loaders** : Feedback utilisateur pour actions et erreurs.
 
 ## 🚀 Fonctionnalités futures (extensions possibles)
 - Conversations de groupe (chat rooms à plusieurs).
