@@ -1,4 +1,4 @@
-# 📌 Projet : Application de Chat en Temps Réel
+# 📌 1. Projet : Application de Chat en Temps Réel
 
 
 ## 🎯 Objectif
@@ -27,11 +27,11 @@ Développer une application de chat **one-to-one** (et extensible au multi-utili
 
 ### 🗂 Navigation & Layout
 - **Page principale** :
-  - Liste des utilisateurs sur le **côté gauche** avec leur statut (boule verte/ grise).
-  - Barre de recherche pour filtrer les utilisateurs par **username**.
-  - Zone de chat à droite, affichant l’historique et les nouveaux messages.
+    - Liste des utilisateurs sur le **côté gauche** avec leur statut (boule verte/ grise).
+    - Barre de recherche pour filtrer les utilisateurs par **username**.
+    - Zone de chat à droite, affichant l’historique et les nouveaux messages.
 - **Responsiveness** :
-  - Desktop et mobile adaptés.
+    - Desktop et mobile adaptés.
 
 ### 🔍 Recherche & UX
 - L’utilisateur peut **rechercher un autre user** par son username.
