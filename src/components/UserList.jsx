@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getUsers } from '../services/userService';
 import { useAuth } from '../hooks/useAuth';
 import { useSocket } from '../hooks/useSocket';
@@ -108,7 +108,7 @@ const UserList = ({ onSelectUser }) => {
       />
       <List>
         {filteredUsers.map(user => (
-          <ListItem button key={user.id} onClick={() => onSelectUser(user)}>
+          <ListItem button key={user.id} onClick={() => onSelectUser(user)} sx={{ '&:hover': { cursor: 'pointer' } }}>
             <ListItemAvatar>
               <StyledBadge
                 overlap="circular"
