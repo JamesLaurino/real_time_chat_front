@@ -89,7 +89,12 @@ const ChatWindow = ({ selectedConversation, onConversationUpdated }) => {
          (message.senderId === currentConversation.other_user.id && message.recipientId === currentUser.id));
 
       if (isForCurrentConv || isForNewConv) {
-        setMessages(prevMessages => [...prevMessages, normalizedMessage]);
+        setMessages(prevMessages => {
+          if (prevMessages.some(msg => msg.id === normalizedMessage.id)) {
+            return prevMessages;
+          }
+          return [...prevMessages, normalizedMessage];
+        });
       }
     };
 
@@ -110,7 +115,12 @@ const ChatWindow = ({ selectedConversation, onConversationUpdated }) => {
       if (fetchedMessages.length < limit) {
         setHasMoreMessages(false);
       }
-      setMessages(prevMessages => [...fetchedMessages.reverse(), ...prevMessages]);
+      setMessages(prevMessages => {
+        const newMessages = fetchedMessages.reverse().filter(
+          fetchMsg => !prevMessages.some(prevMsg => prevMsg.id === fetchMsg.id)
+        );
+        return [...newMessages, ...prevMessages];
+      });
       setPage(pageNum + 1);
     } catch (error) {
       console.error(error);
