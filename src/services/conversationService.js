@@ -1,7 +1,7 @@
 import { apiFetch } from './api';
 
 export const getConversations = () => {
-  return apiFetch('/users/me/conversations');
+  return apiFetch(`/users/me/conversations?t=${new Date().getTime()}`);
 };
 
 export const getMessages = (conversationId, limit = 20, offset = 0) => {

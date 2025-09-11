@@ -39,7 +39,7 @@ const ChatWindow = ({ selectedConversation, onConversationUpdated }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  useEffect(() => {
+    useEffect(() => {
     setMessages([]);
     setPage(1);
     setHasMoreMessages(true);

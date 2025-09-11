@@ -47,14 +47,14 @@ const ChatPage = () => {
 
   const handleSelectUser = (selectedUser) => {
     const existingConversation = conversations.find(conv =>
-      (conv.user1_id === user.id && conv.user2_id === selectedUser.id) ||
-      (conv.user1_id === selectedUser.id && conv.user2_id === user.id)
+      (Number(conv.user1_id) === Number(user.id) && Number(conv.user2_id) === Number(selectedUser.id)) ||
+      (Number(conv.user1_id) === Number(selectedUser.id) && Number(conv.user2_id) === Number(user.id))
     );
 
     if (existingConversation) {
       setSelectedConversation({
         ...existingConversation,
-        other_user: conversations.find(c => c.id === existingConversation.id)?.other_user || selectedUser
+        other_user: selectedUser
       });
     } else {
       setSelectedConversation({
@@ -135,7 +135,7 @@ const ChatPage = () => {
         component="main"
         sx={{ flexGrow: 1, p: 0, width: { sm: `calc(100% - ${drawerWidth}px)` }, mt: '64px' }}
       >
-        <ChatWindow selectedConversation={selectedConversation} onConversationUpdated={handleConversationUpdated} />
+        <ChatWindow key={selectedConversation?.id || selectedConversation?.other_user?.id} selectedConversation={selectedConversation} onConversationUpdated={handleConversationUpdated} />
       </Box>
     </Box>
   );
