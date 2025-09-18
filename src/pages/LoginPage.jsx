@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { login as loginService } from '../services/authService';
-import { Container, Box, TextField, Button, Typography, Grid, Link, Alert, CircularProgress } from '@mui/material';
+import { Container, Box, TextField, Button, Typography, Grid, Link, Alert, CircularProgress, Snackbar } from '@mui/material';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -11,21 +11,29 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const { login, user } = useAuth();
   const navigate = useNavigate();
+  const [successOpen, setSuccessOpen] = useState(false);
 
   useEffect(() => {
     // Redirect if user is successfully fetched
     if (user) {
+      if (successOpen) {
+        const timeoutId = setTimeout(() => navigate('/chat'), 1200);
+        return () => clearTimeout(timeoutId);
+      }
       navigate('/chat');
     }
-  }, [user, navigate]);
+  }, [user, navigate, successOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const { token } = await loginService({ email, password });
+      const { token } = await loginService({ email, password })
+      //test token 
+      console.log("Token: ", token);
       login(token);
+      setSuccessOpen(true);
       // Navigation is now handled by the useEffect hook
     } catch (err) {
       setError(err.message);
@@ -96,6 +104,16 @@ const LoginPage = () => {
           </Grid>
         </Box>
       </Box>
+      <Snackbar
+        open={successOpen}
+        autoHideDuration={1200}
+        onClose={() => setSuccessOpen(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={() => setSuccessOpen(false)} severity="success" sx={{ width: '100%' }}>
+          Login successful
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

@@ -7,6 +7,7 @@ import { Box, Button, AppBar, Toolbar, Typography, Drawer, IconButton, useTheme,
 import MenuIcon from '@mui/icons-material/Menu';
 import { getConversations } from '../services/conversationService';
 import { useNotifier } from '../context/NotificationContext';
+import { useSocket } from '../hooks/useSocket';
 
 const drawerWidth = 300;
 
@@ -19,6 +20,7 @@ const ChatPage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const socket = useSocket();
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -35,6 +37,19 @@ const ChatPage = () => {
       fetchConversations();
     }
   }, [user, addNotification]);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleStatusChange = ({ userId, online }) => {
+      setSelectedConversation(prev => {
+        if (!prev || !prev.other_user) return prev;
+        if (Number(prev.other_user.id) !== Number(userId)) return prev;
+        return { ...prev, other_user: { ...prev.other_user, online } };
+      });
+    };
+    socket.on('user_status_changed', handleStatusChange);
+    return () => socket.off('user_status_changed', handleStatusChange);
+  }, [socket]);
 
   const handleLogout = () => {
     logout();
@@ -65,6 +80,10 @@ const ChatPage = () => {
         messages: [],
       });
     }
+    addNotification(
+      `${selectedUser.username} is ${selectedUser.online ? 'online' : 'offline'}`,
+      selectedUser.online ? 'success' : 'info'
+    );
     if(isMobile) {
         setMobileOpen(false);
     }
