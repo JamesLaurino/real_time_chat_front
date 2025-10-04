@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 const SOCKET_URL =
     window.location.hostname === 'localhost'
         ? 'http://localhost:3000'
-        : '/socket.io';
+        : undefined;
 
 
 export const useSocket = () => {
