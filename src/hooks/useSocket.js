@@ -2,7 +2,11 @@ import { useEffect, useState, useContext } from 'react';
 import io from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
 
-const SOCKET_URL = 'http://localhost:3000';
+const SOCKET_URL =
+    window.location.hostname === 'localhost'
+        ? 'http://localhost:3000'
+        : '/socket.io';
+
 
 export const useSocket = () => {
   const { token } = useContext(AuthContext);
@@ -11,6 +15,7 @@ export const useSocket = () => {
   useEffect(() => {
     if (token) {
       const newSocket = io(SOCKET_URL, {
+        path:'/socket.io',
         auth: {
           token,
         },
