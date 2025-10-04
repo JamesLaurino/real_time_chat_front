@@ -1,6 +1,6 @@
 const API_URL =
     window.location.hostname === 'localhost'
-        ? 'http://82.29.172.74:3000/api'
+        ? 'http://localhost:3000'
         : '/api';
 
 
