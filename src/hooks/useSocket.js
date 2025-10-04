@@ -16,6 +16,7 @@ export const useSocket = () => {
     if (token) {
       const newSocket = io(SOCKET_URL, {
         path:'/socket.io',
+        transports: ['websocket'],
         auth: {
           token,
         },
