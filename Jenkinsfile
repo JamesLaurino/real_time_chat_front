@@ -18,5 +18,10 @@ pipeline {
                 sh 'cp -r dist /home/frontend'
             }
         }
+        stage('Restart nginx') {
+            steps {
+                sh 'systemctl stop nginx && systemctl start nginx'
+            }
+        }
     }
 }
