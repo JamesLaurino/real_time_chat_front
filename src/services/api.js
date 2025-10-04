@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://82.29.172.74:3000';
 
 export const apiFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
