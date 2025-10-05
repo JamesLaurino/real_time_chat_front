@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/lungs/Documents/GitHub/real_time_chat/**)",
+      "Bash(curl -X POST http://localhost:3000/auth/login -H \"Content-Type: application/json\" -d \"{\"\"email\"\":\"\"tonic@example.com\"\",\"\"password\"\":\"\"password123\"\"}\")",
+      "Bash(curl -X POST http://localhost:3000/auth/login -H \"Content-Type: application/json\" -d \"{\"\"email\"\":\"\"david@example.com\"\",\"\"password\"\":\"\"password123\"\"}\")",
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
