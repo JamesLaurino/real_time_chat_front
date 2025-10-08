@@ -5,6 +5,8 @@ import UserList from '../components/UserList';
 import ChatWindow from '../components/ChatWindow';
 import { Box, Button, AppBar, Toolbar, Typography, Drawer, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import GroupIcon from '@mui/icons-material/Group';
+import HomeIcon from '@mui/icons-material/Home';
 import { getConversations } from '../services/conversationService';
 import { useNotifier } from '../context/NotificationContext';
 import { useSocket } from '../hooks/useSocket';
@@ -129,6 +131,22 @@ const ChatPage = () => {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Chat {user?.username ? `- ${user.username}` : ''}
           </Typography>
+          <Button
+            color="inherit"
+            startIcon={<HomeIcon />}
+            onClick={() => navigate('/')}
+            sx={{ mr: 2 }}
+          >
+            Home
+          </Button>
+          <Button
+            color="inherit"
+            startIcon={<GroupIcon />}
+            onClick={() => navigate('/multichat')}
+            sx={{ mr: 2 }}
+          >
+            Group Chat
+          </Button>
           <Button color="inherit" onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>

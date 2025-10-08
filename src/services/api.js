@@ -28,5 +28,6 @@ export const apiFetch = async (endpoint, options = {}) => {
     throw new Error(errorMsg || `Request failed with status ${response.status}`);
   }
 
-  return data.data;
+  // Some endpoints return { data: ... }, others return data directly
+  return data.data !== undefined ? data.data : data;
 };

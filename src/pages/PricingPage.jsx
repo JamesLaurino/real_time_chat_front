@@ -10,24 +10,32 @@ function PricingPage() {
   const navigate = useNavigate();
   const [isAnnual, setIsAnnual] = useState(false);
 
-  const features = [
-    'Messagerie en temps réel illimitée',
+  const freeFeatures = [
+    'Chat 1-à-1 illimité',
+    'Messagerie en temps réel',
     'Chiffrement de bout en bout',
-    'Partage de fichiers et support média',
-    'Conversations de groupe',
-    'Applications mobiles et desktop',
-    'Support client prioritaire',
-    'Garantie de disponibilité 99,9%',
-    'Fonctionnalités de sécurité avancées'
+    'Historique des messages (30 jours)',
+    'Support communautaire'
   ];
 
-  const monthlyPrice = 20;
-  const annualPrice = 200;
+  const premiumFeatures = [
+    'Tout du plan Gratuit',
+    'Chat de groupe illimité',
+    'Gestion avancée des groupes',
+    'Historique illimité des messages',
+    'Partage de fichiers (100 MB)',
+    'Support prioritaire 24/7',
+    'Thèmes personnalisés',
+    'Sans publicité'
+  ];
+
+  const monthlyPrice = 9.99;
+  const annualPrice = 99;
   const monthlySavings = ((monthlyPrice * 12 - annualPrice) / (monthlyPrice * 12) * 100).toFixed(0);
 
   const handleSubscribe = (plan, price, period) => {
-    navigate('/register', { 
-      state: { 
+    navigate('/register', {
+      state: {
         selectedPlan: plan,
         price: price,
         period: period
@@ -37,23 +45,23 @@ function PricingPage() {
 
   const pricingPlans = [
     {
-      title: 'Forfait Mensuel',
-      price: monthlyPrice,
+      title: 'Gratuit',
+      price: 0,
       period: 'mois',
-      features: features,
-      isPopular: !isAnnual,
-      buttonText: 'Commencer le Forfait Mensuel',
-      onSubscribe: () => handleSubscribe('Mensuel', monthlyPrice, 'mois')
+      features: freeFeatures,
+      isPopular: false,
+      buttonText: 'Commencer Gratuitement',
+      onSubscribe: () => handleSubscribe('Gratuit', 0, 'gratuit')
     },
     {
-      title: 'Forfait Annuel',
-      price: annualPrice,
-      period: 'an',
-      originalPrice: monthlyPrice * 12,
-      features: features,
-      isPopular: isAnnual,
-      buttonText: 'Commencer le Forfait Annuel',
-      onSubscribe: () => handleSubscribe('Annuel', annualPrice, 'an')
+      title: isAnnual ? 'Premium Annuel' : 'Premium Mensuel',
+      price: isAnnual ? annualPrice : monthlyPrice,
+      period: isAnnual ? 'an' : 'mois',
+      originalPrice: isAnnual ? monthlyPrice * 12 : null,
+      features: premiumFeatures,
+      isPopular: true,
+      buttonText: isAnnual ? 'Souscrire Annuellement' : 'Souscrire Mensuellement',
+      onSubscribe: () => handleSubscribe(isAnnual ? 'Premium Annuel' : 'Premium Mensuel', isAnnual ? annualPrice : monthlyPrice, isAnnual ? 'an' : 'mois')
     }
   ];
 

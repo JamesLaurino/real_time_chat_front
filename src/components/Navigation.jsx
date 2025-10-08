@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, useTheme } from '@mui/material';
 import { Menu, Close } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 function Navigation() {
   const navigate = useNavigate();
@@ -9,12 +10,27 @@ function Navigation() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useContext(AuthContext);
 
-  const navItems = [
+  // Public navigation items
+  const publicNavItems = [
     { label: 'Accueil', path: '/' },
+    { label: 'À Propos', path: '/about' },
+    { label: 'Contact', path: '/contact' },
     { label: 'Tarification', path: '/pricing' },
     { label: 'Support', path: '/support' }
   ];
+
+  // Authenticated-only navigation items
+  const authNavItems = [
+    { label: 'Chat', path: '/chat' },
+    { label: 'Multichat', path: '/multichat' }
+  ];
+
+  // Combine nav items based on auth status
+  const navItems = user
+    ? [...publicNavItems.slice(0, 1), ...authNavItems, ...publicNavItems.slice(1)]
+    : publicNavItems;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
